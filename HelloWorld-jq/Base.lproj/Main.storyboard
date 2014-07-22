@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6185.7" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="QAP-Hg-wfE">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6181.2"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="ufC-wZ-h7g">
+            <objects>
+                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModule="HelloWorld_jq" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
+                        <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ldj-ge-0jS">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="640"/>
+                                </variation>
+                                <connections>
+                                    <outlet property="dataSource" destination="vXZ-lx-hvc" id="ZEO-TC-lvH"/>
+                                    <outlet property="delegate" destination="vXZ-lx-hvc" id="5B7-xj-TI8"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="ldj-ge-0jS" secondAttribute="bottom" id="4wN-JZ-jbt"/>
+                            <constraint firstAttribute="trailing" secondItem="ldj-ge-0jS" secondAttribute="trailing" id="PyI-2p-vai"/>
+                            <constraint firstItem="ldj-ge-0jS" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="VwW-mP-Byv"/>
+                            <constraint firstItem="ldj-ge-0jS" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="zsJ-hD-WbC"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="ldj-ge-0jS"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="4wN-JZ-jbt"/>
+                                <exclude reference="PyI-2p-vai"/>
+                                <exclude reference="VwW-mP-Byv"/>
+                                <exclude reference="zsJ-hD-WbC"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="ldj-ge-0jS"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="4wN-JZ-jbt"/>
+                                <include reference="PyI-2p-vai"/>
+                                <include reference="VwW-mP-Byv"/>
+                                <include reference="zsJ-hD-WbC"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <navigationItem key="navigationItem" id="tPH-QO-bTW"/>
+                    <connections>
+                        <outlet property="appsTableView" destination="ldj-ge-0jS" id="usP-kj-ApW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="937.5" y="144"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="UtG-Wi-y21">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="QAP-Hg-wfE" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ans-a6-Bgd">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="d7H-Kn-oNU"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8vL-QG-NCd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="315" y="144"/>
+        </scene>
+    </scenes>
+</document>
