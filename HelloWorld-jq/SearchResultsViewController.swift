@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  SearchResultsViewController.swift
 //  HelloWorld-jq
 //
 //  Created by Muya on 7/22/14.
@@ -8,14 +8,16 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class SearchResultsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, APIControllerProtocol {
+    var api: APIController = APIController()
     var tableData: NSArray = []
     @IBOutlet var appsTableView: UITableView
                             
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.api.delegate = self
         // Do any additional setup after loading the view, typically from a nib.
-        searchItunesFor("JQ Software")
+        api.searchItunesFor("JQ Software")
     }
 
     override func didReceiveMemoryWarning() {
@@ -49,37 +51,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return cell
     }
     
-    func searchItunesFor(searchTerm: String){
-        //itunes api wants multiple terms separated by + symbol, so replace 
-        //spaces with + signs
-        var itunesSearchTerm = searchTerm.stringByReplacingOccurrencesOfString("", withString: "+", options: NSStringCompareOptions.CaseInsensitiveSearch, range: nil)
-        
-        //escape anything that isn't url-friendly
-        var escapedSearchTerm = itunesSearchTerm.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
-        var urlPath = "https://itunes.apple.com/search?term=\(escapedSearchTerm)&media=software"
-        var url: NSURL = NSURL(string: urlPath)
-        var session = NSURLSession.sharedSession()
-        
-        var task = session.dataTaskWithURL(url, completionHandler: {data, response, error -> Void in
-            println("Task completed")
-            if error {
-                println(error.localizedDescription)
-            }
-            var err: NSError?
-            var jsonResult = NSJSONSerialization.JSONObjectWithData(data,
-                options: NSJSONReadingOptions.MutableContainers, error: &err) as NSDictionary
-            if err? {
-                println("JSON ERROR: \(err!.localizedDescription)")
-            }
-            var results: NSArray = jsonResult["results"] as NSArray
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.tableData = results
-                    self.appsTableView.reloadData()
-                    })
+    func didReceiveAPIResults(results: NSDictionary) {
+        var resultsArr: NSArray = results["results"] as NSArray
+        dispatch_async(dispatch_get_main_queue(), {
+            self.tableData = resultsArr
+            self.appsTableView.reloadData()
             })
-        task.resume()
     }
-
+    
+    
 
 }
 
