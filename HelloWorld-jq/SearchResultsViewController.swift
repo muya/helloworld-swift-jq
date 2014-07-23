@@ -30,7 +30,8 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
     }
     
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell!{
-        let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "My Test Cell")
+        let kCellIdentifier: String = "SearchResultCell"
+        let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier) as UITableViewCell
         
         var rowData: NSDictionary = self.tableData[indexPath.row] as NSDictionary
         
@@ -49,6 +50,19 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
         cell.detailTextLabel.text = formattedPrice
         
         return cell
+    }
+    
+    func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
+        var rowData: NSDictionary = self.tableData[indexPath.row] as NSDictionary
+        
+        var name: String = rowData["trackName"] as String
+        var formattedPrice: String = rowData["formattedPrice"] as String
+        
+        var alert: UIAlertView = UIAlertView()
+        alert.title = name
+        alert.message = formattedPrice
+        alert.addButtonWithTitle("OK")
+        alert.show()
     }
     
     func didReceiveAPIResults(results: NSDictionary) {
