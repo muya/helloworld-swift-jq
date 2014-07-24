@@ -9,6 +9,8 @@
 import UIKit
 
 class SearchResultsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, APIControllerProtocol {
+    let kCellIdentifier: String = "SearchResultCell"
+    var imageCache = NSMutableDictionary()
     var api: APIController = APIController()
     var tableData: NSArray = []
     @IBOutlet var appsTableView: UITableView
@@ -17,7 +19,7 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
         super.viewDidLoad()
         self.api.delegate = self
         // Do any additional setup after loading the view, typically from a nib.
-        api.searchItunesFor("JQ Software")
+        api.searchItunesFor("2048")
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,16 +32,15 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
     }
     
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell!{
-        let kCellIdentifier: String = "SearchResultCell"
         let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier) as UITableViewCell
         
         var rowData: NSDictionary = self.tableData[indexPath.row] as NSDictionary
         
-        cell.textLabel.text = rowData["trackName"] as String
+        let cellText: String? = rowData["trackName"] as? String
         
-        //grab artworkurl key to get an image for the app's thumbnail
-        var urlString:NSString = rowData["artworkUrl60"] as NSString
-        var imgURL: NSURL = NSURL(string: urlString)
+        cell.textLabel.text = cellText
+        
+        
         
         //Download an NSData representation of the image at the URL
         var imgData: NSData = NSData(contentsOfURL: imgURL)
@@ -48,6 +49,22 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
         //get formatted price string for display in the subtitle
         var formattedPrice: NSString = rowData["formattedPrice"] as NSString
         cell.detailTextLabel.text = formattedPrice
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+            //grab artworkurl key to get an image for the app's thumbnail
+            var urlString:NSString = rowData["artworkUrl60"] as NSString
+
+            var image: UIImage? = self.imageCache.valueForKey(urlString) as? UIImage
+            
+            
+            if (!image?) {
+                //download image
+                var imgURL: NSURL = NSURL(string: urlString)
+                
+                //download an NSData representation of hte image at the url
+                var request: NSURLRequest = NSURLRequest(URL: imgURL)
+            }
+            })
         
         return cell
     }
